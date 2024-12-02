@@ -1,96 +1,97 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.ArrayList; 
 
-public class Book
-{
-    // What should a book contain?
-    // Ideas: need to store text, need to store current reading position
-    //        title, author?, source URL, ... 
+public class Book {
     private String title;
     private ArrayList<String> text = new ArrayList<String>();
 
-    Book()
-    {
+    // Constructor for an empty book
+    public Book() {
         // Empty book
     }
 
-    public void printlines(int start, int length)
-    {
+    // Print a range of lines from the book
+    public void printlines(int start, int length) {
         System.out.println("Lines " + start + " to " + (start + length) + " of book: " + title);
-        for (int i=start; i<start+length; i++)
-        {
-            if (i < text.size())
-            {
+        for (int i = start; i < start + length; i++) {
+            if (i < text.size()) {
                 System.out.println(i + ": " + text.get(i));
-            }
-            else
-            {
-                System.out.println(i + ": line not in book.");     
+            } else {
+                System.out.println(i + ": line not in book.");
             }
         }
     }
 
-    String getTitle()
-    {
+    // Getter and setter for title
+    public String getTitle() {
         return title;
     }
-    void setTitle(String title)
-    {
+
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    String getLine(int lineNumber)
-    {
+    // Get the text of a specific line
+    public String getLine(int lineNumber) {
         return text.get(lineNumber);
     }
 
-    int getLineCount()
-    {
+    // Get the total number of lines in the book
+    public int getLineCount() {
         return text.size();
     }
 
-    void appendLine(String line)
-    {
+    // Add a line of text to the book
+    public void appendLine(String line) {
         text.add(line);
     }
 
-    public void readFromString(String title, String string)
-    {
-        // load a book from an input string.
+    // Load a book from a string
+    public void readFromString(String title, String string) {
         this.title = title;
         Scanner scanner = new Scanner(string);
-        while (scanner.hasNext()) 
-        {
+        while (scanner.hasNext()) {
             String line = scanner.nextLine();
             text.add(line);
         }
         scanner.close();
     }
 
-    public void readFromUrl(String title, String url)
-    {
-        // load a book from a URL.
-        // https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
+    // Load a book from a URL
+    public void readFromUrl(String title, String url) {
         this.title = title;
-
         try {
             URL bookUrl = new URL(url);
             Scanner scanner = new Scanner(bookUrl.openStream());
-            while (scanner.hasNext()) 
-            {
+            while (scanner.hasNext()) {
                 text.add(scanner.nextLine());
             }
             scanner.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    void writeToFile()
-    {
-        // Add code here to write the contents of the book to a file.
+    // Load a book from a file
+    public void readFromFile(String filePath, String title) throws IOException {
+        this.title = title;
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            text.add(line);
+        }
+        reader.close();
+    }
+
+    // Write the book's text to a file
+    public void writeToFile(String filePath) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        for (String line : text) {
+            writer.write(line);
+            writer.newLine();
+        }
+        writer.close();
     }
 }

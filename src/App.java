@@ -1,42 +1,42 @@
 public class App {
-    public static void main(String[] args)
-    {
-        /*  Introduction and TODO List
+    public static void main(String[] args) {
+        // Step 1: Create an instance of Book and add the Grinch story text to it
+        Book grinchBook = new Book();
+        grinchBook.setTitle("How The Grinch Stole Christmas");
 
-        This project is setup with four main classes:
-            1. App - the main application
-            2. Book - a class that creates the basic book objects.
-                - a Book contains a representation of a real book.
-                - Book has methods to read data in from various sources
-                - Book also has methods to read data out.
-            3. PigLatinTranslator - a static class
-                - Used to implement your translator.
-                - Has two public methods to take input and return a translated copy.
-                    - Book translate(Book input)
-                    - String translate(String input)
-            4. TestSuite - a simple class that helps you test your work.
-                - Just like CodingBat this class tries your code against various cases.
-                - It will tell you which cases return expected output or not
-         */
+        // Add the full text of the Grinch story to the book
+        String grinchStory = 
+            "Every Who Down in Whoville Liked Christmas a lot...\n" +
+            "But the Grinch,Who lived just north of Whoville, Did NOT!\n" +
+            "The Grinch hated Christmas! The whole Christmas season!\n" +
+            "Now, please don't ask why. No one quite knows the reason.\n" +
+            "It could be his head wasn't screwed on just right.\n" +
+            "It could be, perhaps, that his shoes were too tight.\n" +
+            "But I think that the most likely reason of all,\n" +
+            "May have been that his heart was two sizes too small.\n" +
+            "Whatever the reason, His heart or his shoes,\n" +
+            "He stood there on Christmas Eve, hating the Whos,\n" +
+            "Staring down from his cave with a sour, Grinchy frown,\n" +
+            "At the warm lighted windows below in their town.\n" +
+            "For he knew every Who down in Whoville beneath,\n" +
+            "Was busy now, hanging a mistletoe wreath.\n" +
+            "And they're hanging their stockings! he snarled with a sneer,\n" +
+            "Tomorrow is Christmas! It's practically here!\n" +
+            "...";  // Add the rest of the story here in a similar format
 
+        // Adding the story text to the book
+        grinchBook.readFromString(grinchBook.getTitle(), grinchStory);
 
-        // Run tests, comment out once they pass.
-        TestSuite.run();
+        // Step 2: Print original Grinch story (optional)
+        System.out.println("Original Grinch Story:\n");
+        grinchBook.printlines(0, grinchBook.getLineCount());
 
-        // Starter book
-        Book input = new Book();
+        // Step 3: Translate the Grinch book to Pig Latin using the PigLatinTranslator
+        PigLatinTranslator translator = new PigLatinTranslator();
+        Book translatedGrinchBook = translator.translate(grinchBook);
 
-        // Start with a "test" book based on a string.
-        // Get this to work, and all the tests to pass first.
-        input.readFromString("Test", "Dog\nCat\nMouse");
-
-        // Example reading from a URL
-        //input.readFromUrl("Romeo and Juliette", "https://gutenberg.pglaf.org/cache/epub/1513/pg1513.txt");
-
-        input.printlines(0,2);
-        Book output = PigLatinTranslator.translate(input);
-        output.printlines(0,2);
-        //output.writeToFile();
+        // Step 4: Print the translated Grinch story in Pig Latin
+        System.out.println("\nGrinch Story in Pig Latin:\n");
+        translatedGrinchBook.printlines(0, translatedGrinchBook.getLineCount());
     }
 }
-
